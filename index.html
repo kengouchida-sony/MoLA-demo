@@ -59,6 +59,7 @@
                 <span class="author-block">Takashi Shibuya<sup>1</sup>,</span>
                 <span class="author-block">Yuhta Takida<sup>1</sup>,</span>
                 <span class="author-block">Naoki Murata<sup>1</sup>,</span>
+                <span class="author-block">Julian Tanke<sup>1</sup>,</span>
                 <span class="author-block">Shusuke Takahashi<sup>2</sup>,</span>
                 <span class="author-block">Yuki Mitsufuji<sup>1,2</sup>,</span>
                   </div>
@@ -118,7 +119,7 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-        <img src="static/images/MoLA_teaser.jpg">
+        <img src="static/images/MoLA_teaser.png">
     </div>
   </div>
 </section>
@@ -132,7 +133,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            In motion generation, controllability as well as generation quality and speed is becoming more and more important. There are various motion editing tasks, such as in-betweening, upper body editing, and path-following, but existing methods perform motion editing with a data-space diffusion model, which is slow in inference compared to a latent diffusion model. In this paper, we propose <b>MoLA</b>, which provides fast and high-quality motion generation and also can deal with multiple editing tasks in a single framework. For high-quality and fast generation, we employ a variational autoencoder and latent diffusion model, and improve the performance with adversarial training. In addition, we apply a training-free guided generation framework to achieve various editing tasks with motion control inputs. We quantitatively show the effectiveness of adversarial learning in text-to-motion generation, and demonstrate the applicability of our editing framework to multiple editing tasks in the motion domain.
+            In text-to-motion generation, controllability as well as generation quality and speed has become increasingly critical. The controllability challenges include generating a motion of a length that matches the given textual description and editing the generated motions according to control signals, such as the start-end positions and the pelvis trajectory. In this paper, we propose <b>MoLA</b>, which provides fast, high-quality, variable-length motion generation and can also deal with multiple editing tasks in a single framework. Our approach revisits the motion representation used as inputs and outputs in the model, incorporating an activation variable to enable variable-length motion generation. Additionally, we integrate a variational autoencoder and a latent diffusion model, further enhanced through adversarial training, to achieve high-quality and fast generation. Moreover, we apply a training-free guided generation framework to achieve various editing tasks with motion control inputs. We quantitatively show the effectiveness of adversarial learning in text-to-motion generation, and demonstrate the applicability of our editing framework to multiple editing tasks in the motion domain.  
           </p>
         </div>
       </div>
@@ -143,29 +144,27 @@
 
 <section class="hero is-small">
   <div class="container hero-body">
-    <h2 class="title is-centered has-text-centered">Motivation</h2>
-       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/comparison_property.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="90%" height=auto />
-      </div>
+    <h2 class="title is-centered has-text">Motivation</h2>
       <div class="item">
         <!-- Your image here -->
-        <img src="static/images/MoLA_property.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="100%" height=auto />
+        <img src="static/images/MoLA_property.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="75%" height=auto />
         <h2 class="subtitle is-centered has-text-centered">
-          MoLA achieves 1) fast generation, 2) a high generation performance, and 3) multiple motion editing in a training-free manner.
+          <b>MoLA</b> achieves 1) fast generation, 2) a high generation performance, and 3) multiple motion editing in a training-free manner, and significantly extends the performance boundaries (in terms of generation quality and speed) of methods categorized as enabling training-free editing.
         </h2>
       </div>
   </div>
 </section>
 
-<section class="hero is-small">
+<section class="hero is-small is-light">
   <div class="container hero-body">
-    <h2 class="title is-centered has-text-centered">Pipeline</h2>
+    <h2 class="title is-centered has-text">Pipeline</h2>
        <div class="item">
         <!-- Your image here -->
-        <img src="static/images/MoLA_overall.jpg" style="display: block; margin: auto;" alt="MY ALT TEXT" width="80%" height=auto />
+        <img src="static/images/MoLA_overall.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="80%" height=auto />
         <h2 class="subtitle is-centered has-text-centered">
-          Overall architecture of MoLA.
+          The overall framework of MoLA. Stage 1: A motion VAE enhanced by adversarial training learns a low-dimensional latent representation of diverse motion sequences. 
+          Stage 2: A text-conditioned latent diffusion model leverages this representation for fast and high-quality text-to-motion generation. 
+          Guided generation: During inference, a gradient-based method minimizes a loss function for each desired editing task, enabling multiple motion editing tasks within a unified framework.
         </h2>
       </div>
   </div>
@@ -173,14 +172,10 @@
 
 <section class="hero is-small">
   <div class="container hero-body">
-    <h2 class="title is-centered has-text-centered">Results</h2>
+    <h2 class="title is-centered has-text">Results</h2>
        <div class="item">
         <!-- Your image here -->
         <img src="static/images/result_humanml3d.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="80%"/>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/result_kit.png" style="display: block; margin: auto;" alt="MY ALT TEXT" width="80%"/>
       </div>
   </div>
 </section>
@@ -188,149 +183,37 @@
 
 <!-- End image carousel -->
 
-
-
-
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="container hero-body">
-    <h2 class="title is-3 has-text-centered"">Text-to-Motion</h2>
-    <div class="container-video">
-        <div class="item item-video">
-          <video poster="" id="video" autoplay controls muted loop width="80%" height="auto">
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-centered has-text">Motion generation Demo</h2>
+        <div class="item item-video1">
+          <video poster="" id="video1" style="display: block; margin: auto;" autoplay controls muted loop width="70%" height=auto>
             <!-- Your video file here -->
-            <source src="static/videos/Example_t2m_0_mesh.mp4"
+            <source src="static/videos/MoLA_Generation_DemoVideo.mp4"
             type="video/mp4">
           </video>
-          <h3 class="subtitle has-text-centered">
-            "A person throws something with their right hand."
-          </h3>
-        </div>
-        <div class="item item-video">
-          <video poster="" id="video" autoplay controls muted loop width="80%">
-            <!-- Your video file here -->
-            <source src="static/videos/Example_t2m_1_mesh.mp4"
-            type="video/mp4">
-          </video>
-          <h3 class="subtitle has-text-centered">
-            "This person from a standing position bends forward as if to bow."
-          </h3>
-        </div>
-        <div class="item item-video">
-          <video poster="" id="video" autoplay controls muted loop width="80%">\
-            <!-- Your video file here -->
-            <source src="static/videos/Example_t2m_2_mesh.mp4"
-            type="video/mp4">
-          </video>
-          <h3 class="subtitle has-text-centered">
-            "A person kicked something with left leg."
-          </h3>
         </div>
     </div>
-
-    <div class="container-video">
-      <div class="item item-video">
-        <video poster="" id="video"  autoplay controls muted loop width="80%">
-          <!-- Your video file here -->
-          <source src="static/videos/Example_t2m_3_mesh.mp4"
-          type="video/mp4">
-        </video>
-        <h3 class="subtitle has-text-centered">
-          "A person runs and stops."
-        </h3>
-      </div>
-      <div class="item item-video">
-        <video poster="" id="video" autoplay controls muted loop width="80%">
-          <!-- Your video file here -->
-          <source src="static/videos/Example_t2m_4_mesh.mp4"
-          type="video/mp4">
-        </video>
-        <h3 class="subtitle has-text-centered">
-          "The person waves both arms in the air."
-        </h3>
-      </div>
-      <div class="item item-video">
-        <video poster="" id="video" autoplay controls muted loop width="80%">\
-          <!-- Your video file here -->
-          <source src="static/videos/Example_t2m_5_mesh.mp4"
-          type="video/mp4">
-        </video>
-        <h3 class="subtitle has-text-centered">
-          "Someone walk in a backward motion."
-        </h3>
-      </div>
-  </div>
   </div>
 </section>
-<!-- End video carousel -->
 
 
-<!-- Video carousel -->
 <section class="hero is-small">
-  <div class="container hero-body">
-    <h2 class="title is-3 has-text-centered">Motion editing</h2>
-    <h3 class="subtitle has-text-centered">
-      "A person walks with his hands up."
-    </h3>
-    <div class="container-video">
-        <div class="item item-video">
-          <h4 class="subtitle">
-            In-betweening (w/ start-end control)
-          </h4>
-          <video poster="" id="video" autoplay controls muted loop width="80%">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-centered has-text">Motion editing Demo</h2>
+        <div class="item item-video2">
+          <video poster="" id="video2" style="display: block; margin: auto;" autoplay controls muted loop width="70%" height=auto>
             <!-- Your video file here -->
-            <source src="static/videos/Example_inbetween_0_mesh.mp4"
+            <source src="static/videos/MoLA_Editing_DemoVideo.mp4"
             type="video/mp4">
           </video>
         </div>
-        <div class="item item-video">
-          <h4 class="subtitle">
-            Upper body editing (w/ lower body control)
-          </h4>
-          <video poster="" id="video" autoplay controls muted loop width="80%">
-            <!-- Your video file here -->
-            <source src="static/videos/Example_upper_0_mesh.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video">
-          <h4 class="subtitle">
-            Path-following (w/ trajectory control)
-          </h4>
-          <video poster="" id="video" autoplay controls muted loop width="80%">
-            <!-- Your video file here -->
-            <source src="static/videos/Example_path_0_mesh.mp4"
-            type="video/mp4">
-          </video>
-      </div>
     </div>
-
-    <div class="container-video">
-      <div class="item item-video">
-        <video poster="" id="video" autoplay controls muted loop width="80%">
-          <!-- Your video file here -->
-          <source src="static/videos/Example_inbetween_1_mesh.mp4"
-          type="video/mp4">
-        </video>
-      </div>
-      <div class="item item-video">
-        <video poster="" id="video" autoplay controls muted loop width="80%">
-          <!-- Your video file here -->
-          <source src="static/videos/Example_upper_1_mesh.mp4"
-          type="video/mp4">
-        </video>
-      </div>
-      <div class="item item-video">
-        <video poster="" id="video" autoplay controls muted loop width="80%">
-          <!-- Your video file here -->
-          <source src="static/videos/Example_path_1_mesh.mp4"
-          type="video/mp4">
-        </video>
-    </div>
-  </div>
   </div>
 </section>
-<!-- End video carousel -->
+
 
 
 
@@ -341,7 +224,7 @@
       <h2 class="title">BibTeX</h2>
       <pre><code>@article{uchida2024mola,
         title={MoLA: Motion Generation and Editing with Latent Diffusion Enhanced by Adversarial Training},
-        author={Uchida, Kengo and Shibuya, Takashi and Takida, Yuhta and Murata, Naoki and Takahashi, Shusuke and Mitsufuji, Yuki},
+        author={Uchida, Kengo and Shibuya, Takashi and Takida, Yuhta and Murata, Naoki and Tanke, Julian and Takahashi, Shusuke and Mitsufuji, Yuki},
         journal={arXiv preprint arXiv:2406.01867},
         year={2024}
       }</code></pre>
